@@ -23,6 +23,12 @@ const Signup = () => {
             Create Account
           </h1>
           <SignupForm />
+          <p className="mt-4 text-xl text-center">
+            Already have an account?{" "}
+            <Link to="/login" className="underline font-medium">
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>

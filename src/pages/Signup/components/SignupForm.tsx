@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import Button from "../../../components/ui/Button";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import InputGroup from "../../../components/ui/InputGroup";
+import { useNavigate } from "react-router-dom";
 
 interface SignupFormValues {
   name: string;
@@ -13,9 +14,15 @@ interface SignupFormValues {
 
 const SignupForm = () => {
   const { signup } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleSubmit = async (values: SignupFormValues) => {
-    await signup(values.email, values.password);
+    try {
+      await signup(values.email, values.password);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+    }
     console.log("Successfully signed up");
   };
 

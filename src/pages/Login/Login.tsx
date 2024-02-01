@@ -22,6 +22,12 @@ const Login = () => {
         <div className="mt-16">
           <h1 className="text-4xl font-medium font-grotesk mb-8">Login</h1>
           <LoginForm />
+          <p className="mt-4 text-xl text-center">
+            Don't have an account?{" "}
+            <Link to="/signup" className="underline font-medium">
+              Signup
+            </Link>
+          </p>
         </div>
       </div>
     </div>
