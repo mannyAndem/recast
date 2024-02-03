@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import Loader from "./Loader";
 
 interface ButtonProps {
   variant?: "primary" | "secondary";
@@ -21,9 +22,12 @@ const Button = ({
   return (
     <button
       disabled={disabled}
-      className="text-2xl w-full p-3 rounded-md shadow-sm bg-purple text-smoke font-grotesk disabled:opacity-60"
+      className="relative text-2xl w-full p-3 rounded-md shadow-sm bg-purple text-smoke font-grotesk disabled:opacity-60"
     >
-      {children}
+      <div className={pending ? "opacity-0" : "opacity-100"}>{children}</div>
+      <div className={pending ? "block" : "hidden"}>
+        <Loader variant="light" size="sm" />
+      </div>
     </button>
   );
 };

@@ -4,6 +4,8 @@ import Button from "../../../components/ui/Button";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import InputGroup from "../../../components/ui/InputGroup";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Status } from "../../../shared.types";
 
 interface SignupFormValues {
   name: string;
@@ -16,14 +18,17 @@ const SignupForm = () => {
   const { signup } = useAuthContext();
   const navigate = useNavigate();
 
+  const [status, setStatus] = useState<Status>("idle");
+
   const handleSubmit = async (values: SignupFormValues) => {
+    setStatus("pending");
     try {
       await signup(values.email, values.password);
-      navigate("/dashboard");
+      setStatus("success");
     } catch (err) {
+      setStatus("error");
       console.error(err);
     }
-    console.log("Successfully signed up");
   };
 
   const signupSchema = Yup.object().shape({
@@ -38,6 +43,16 @@ const SignupForm = () => {
       .oneOf([Yup.ref("password")], "Passwords must match")
       .required("This field is required"),
   });
+
+  useEffect(() => {
+    if (status === "success") {
+      navigate("/library");
+    }
+
+    if (status === "error") {
+      // toast error
+    }
+  }, [status]);
 
   return (
     <Formik
@@ -72,6 +87,7 @@ const SignupForm = () => {
             error={errors.password}
             touched={touched.password}
             label="Password"
+            type="password"
           />
           <InputGroup
             name="confirmPassword"
@@ -79,9 +95,15 @@ const SignupForm = () => {
             error={errors.confirmPassword}
             touched={touched.confirmPassword}
             label="Confirm Password"
+            type="password"
           />
           <div className="mt-16 col-span-2">
-            <Button disabled={!isValid || !dirty}>Create Account</Button>
+            <Button
+              disabled={!isValid || !dirty}
+              pending={status === "pending"}
+            >
+              Create Account
+            </Button>
           </div>
         </Form>
       )}

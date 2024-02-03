@@ -2,6 +2,10 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import InputGroup from "../../../components/ui/InputGroup";
 import Button from "../../../components/ui/Button";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../../contexts/AuthContext";
+import { Status } from "../../../shared.types";
+import { useNavigate } from "react-router-dom";
 
 interface LoginFormValues {
   email: string;
@@ -9,15 +13,35 @@ interface LoginFormValues {
 }
 
 const LoginForm = () => {
-  const handleSubmit = (values: LoginFormValues) => {
-    console.log(values);
+  const [status, setStatus] = useState<Status>("pending");
+  const navigate = useNavigate();
+
+  const { login } = useAuthContext();
+
+  const handleSubmit = async ({ email, password }: LoginFormValues) => {
+    setStatus("pending");
+    try {
+      await login(email, password);
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+    }
   };
+
+  useEffect(() => {
+    if (status === "success") {
+      navigate("/library");
+    }
+    if (status === "error") {
+      // toast errors
+    }
+  }, [status]);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .required("This field is required")
       .email("Invalid email address"),
-    password: Yup.string().required(),
+    password: Yup.string().required("This field is required"),
   });
 
   return (
@@ -44,9 +68,10 @@ const LoginForm = () => {
             touched={touched.password}
             label="Password"
             error={errors.password}
+            type="password"
           />
           <div className="mt-16">
-            <Button>Login</Button>
+            <Button pending={status === "pending"}>Login</Button>
           </div>
         </Form>
       )}
