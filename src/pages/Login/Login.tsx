@@ -5,7 +5,7 @@ import LoginForm from "./components/LoginForm";
 
 const Login = () => {
   return (
-    <div className="min-h-screen bg-smoke flex">
+    <div className="min-h-screen bg-smoke flex text-purple">
       <div className="h-full w-1/2">
         <img
           src={loginImg}

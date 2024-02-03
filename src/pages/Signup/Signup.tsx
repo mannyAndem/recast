@@ -4,7 +4,7 @@ import SignupForm from "./components/SignupForm";
 
 const Signup = () => {
   return (
-    <div className="min-h-screen bg-smoke flex">
+    <div className="min-h-screen bg-smoke flex text-purple">
       <div className="h-full w-1/2">
         <img
           src={signupImg}

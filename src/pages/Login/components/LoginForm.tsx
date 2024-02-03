@@ -13,7 +13,7 @@ interface LoginFormValues {
 }
 
 const LoginForm = () => {
-  const [status, setStatus] = useState<Status>("pending");
+  const [status, setStatus] = useState<Status>("idle");
   const navigate = useNavigate();
 
   const { login } = useAuthContext();

@@ -18,8 +18,13 @@ const InputGroup = ({
   touched,
 }: InputGroupProps) => {
   return (
-    <div className="flex flex-col gap-3">
-      <label htmlFor={name} className={touched && error ? "text-red-400" : ""}>
+    <div className="flex flex-col gap-3 text-purple">
+      <label
+        htmlFor={name}
+        className={
+          touched && error ? "text-red-300 font-medium" : "font-medium"
+        }
+      >
         {label}
       </label>
       <Input
@@ -29,7 +34,7 @@ const InputGroup = ({
         error={error}
         touched={touched}
       />
-      {error && touched && <span className="text-red-400">{error}</span>}
+      {error && touched && <span className="text-red-300">{error}</span>}
     </div>
   );
 };
