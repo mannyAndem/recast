@@ -5,7 +5,7 @@ import { type UserCredential } from "firebase/auth";
 
 interface AuthContext {
   user: User | null;
-  signup: (email: string, password: string) => Promise<UserCredential>;
+  signup: (email: string, password: string, name: string) => Promise<void>;
   login: (email: string, password: string) => Promise<UserCredential>;
 }
 

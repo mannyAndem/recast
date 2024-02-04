@@ -6,6 +6,7 @@ import InputGroup from "../../../components/ui/InputGroup";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Status } from "../../../shared.types";
+import toast, { Toaster } from "react-hot-toast";
 
 interface SignupFormValues {
   name: string;
@@ -23,7 +24,7 @@ const SignupForm = () => {
   const handleSubmit = async (values: SignupFormValues) => {
     setStatus("pending");
     try {
-      await signup(values.email, values.password);
+      await signup(values.email, values.password, values.name);
       setStatus("success");
     } catch (err) {
       setStatus("error");
@@ -50,64 +51,67 @@ const SignupForm = () => {
     }
 
     if (status === "error") {
-      // toast error
+      toast.error("Error occured during signup.");
     }
   }, [status]);
 
   return (
-    <Formik
-      initialValues={{
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      }}
-      onSubmit={handleSubmit}
-      validationSchema={signupSchema}
-    >
-      {({ errors, touched, values, isValid, dirty }) => (
-        <Form className="w-full grid grid-cols-2 gap-6 font-inter">
-          <InputGroup
-            name="name"
-            value={values.name}
-            error={errors.name}
-            touched={touched.name}
-            label="Full Name"
-          />
-          <InputGroup
-            name="email"
-            value={values.email}
-            error={errors.email}
-            touched={touched.email}
-            label="Email"
-          />
-          <InputGroup
-            name="password"
-            value={values.password}
-            error={errors.password}
-            touched={touched.password}
-            label="Password"
-            type="password"
-          />
-          <InputGroup
-            name="confirmPassword"
-            value={values.confirmPassword}
-            error={errors.confirmPassword}
-            touched={touched.confirmPassword}
-            label="Confirm Password"
-            type="password"
-          />
-          <div className="mt-16 col-span-2">
-            <Button
-              disabled={!isValid || !dirty}
-              pending={status === "pending"}
-            >
-              Create Account
-            </Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <Toaster />
+      <Formik
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={signupSchema}
+      >
+        {({ errors, touched, values, isValid, dirty }) => (
+          <Form className="w-full grid grid-cols-2 gap-6 font-inter">
+            <InputGroup
+              name="name"
+              value={values.name}
+              error={errors.name}
+              touched={touched.name}
+              label="Full Name"
+            />
+            <InputGroup
+              name="email"
+              value={values.email}
+              error={errors.email}
+              touched={touched.email}
+              label="Email"
+            />
+            <InputGroup
+              name="password"
+              value={values.password}
+              error={errors.password}
+              touched={touched.password}
+              label="Password"
+              type="password"
+            />
+            <InputGroup
+              name="confirmPassword"
+              value={values.confirmPassword}
+              error={errors.confirmPassword}
+              touched={touched.confirmPassword}
+              label="Confirm Password"
+              type="password"
+            />
+            <div className="mt-16 col-span-2">
+              <Button
+                disabled={!isValid || !dirty}
+                pending={status === "pending"}
+              >
+                Create Account
+              </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

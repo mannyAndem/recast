@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import { Status } from "../../../shared.types";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 interface LoginFormValues {
   email: string;
@@ -33,7 +34,7 @@ const LoginForm = () => {
       navigate("/library");
     }
     if (status === "error") {
-      // toast errors
+      toast.error("An error occurred during login.");
     }
   }, [status]);
 
@@ -45,37 +46,40 @@ const LoginForm = () => {
   });
 
   return (
-    <Formik
-      initialValues={{
-        email: "",
-        password: "",
-      }}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
-      {({ values, errors, touched }) => (
-        <Form className="flex flex-col gap-6">
-          <InputGroup
-            name="email"
-            value={values.email}
-            touched={touched.email}
-            label="Email"
-            error={errors.email}
-          />
-          <InputGroup
-            name="password"
-            value={values.password}
-            touched={touched.password}
-            label="Password"
-            error={errors.password}
-            type="password"
-          />
-          <div className="mt-16">
-            <Button pending={status === "pending"}>Login</Button>
-          </div>
-        </Form>
-      )}
-    </Formik>
+    <>
+      <Toaster />
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        {({ values, errors, touched }) => (
+          <Form className="flex flex-col gap-6">
+            <InputGroup
+              name="email"
+              value={values.email}
+              touched={touched.email}
+              label="Email"
+              error={errors.email}
+            />
+            <InputGroup
+              name="password"
+              value={values.password}
+              touched={touched.password}
+              label="Password"
+              error={errors.password}
+              type="password"
+            />
+            <div className="mt-16">
+              <Button pending={status === "pending"}>Login</Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

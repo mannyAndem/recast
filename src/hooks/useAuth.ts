@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 import { useEffect, useState } from "react";
@@ -25,8 +26,9 @@ const useAuth = () => {
     });
   });
 
-  const signup = (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signup = async (email: string, password: string, name: string) => {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(cred.user, { displayName: name });
   };
 
   const login = async (email: string, password: string) => {

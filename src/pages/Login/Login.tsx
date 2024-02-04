@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import loginImg from "../../assets/images/signup-img.jpg";
+import loginImg from "../../assets/images/Film rolls-amico.png";
 import LoginForm from "./components/LoginForm";
 // import SignupForm from "./components/SignupForm";
 
 const Login = () => {
   return (
     <div className="min-h-screen bg-smoke flex text-purple">
-      <div className="h-full w-1/2">
+      <div className="h-full w-1/2 bg-veryLightPurple">
         <img
           src={loginImg}
           alt="Image of film"
