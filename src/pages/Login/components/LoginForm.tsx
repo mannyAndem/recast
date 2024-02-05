@@ -25,6 +25,7 @@ const LoginForm = () => {
       await login(email, password);
       setStatus("success");
     } catch (err) {
+      console.error(err);
       setStatus("error");
     }
   };

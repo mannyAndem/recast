@@ -1,8 +1,16 @@
+import { useEffect } from "react";
 import Button from "../../../components/ui/Button";
 import useRecord from "../../../hooks/useRecord";
 
 const NewVideoButton = () => {
-  return <Button>New Video</Button>;
+  const { startRecording, stopRecording } = useRecord();
+
+  useEffect(() => {
+    setTimeout(() => {
+      stopRecording();
+    }, 5000);
+  }, []);
+  return <Button onClick={startRecording}>New Video</Button>;
 };
 
 export default NewVideoButton;

@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
+  const [video, setVideo] = useState<string | null>(null);
 
   useEffect(() => {
-    if (stream) {
+    if (stream && !recorder) {
       const recorder = createRecorder(stream);
       setRecorder(recorder);
     }
@@ -23,6 +24,9 @@ const useRecord = () => {
       type: "video/mp4",
     });
 
+    const blobSrc = URL.createObjectURL(blob);
+    console.log(blobSrc);
+    setVideo(blobSrc);
     // TODO: logic to save blob to firestore;
   };
 
@@ -52,10 +56,11 @@ const useRecord = () => {
   const stopRecording = () => {
     if (recorder) {
       recorder.stop();
+      console.log("Recording stopped");
     }
   };
 
-  return { startRecording, stopRecording };
+  return { startRecording, stopRecording, video };
 };
 
 export default useRecord;
