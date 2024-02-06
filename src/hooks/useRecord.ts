@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import useStorage from "./useStorage";
 
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
+
+  const { uploadFile } = useStorage();
 
   const startRecording = () => {
     createStream();
@@ -41,6 +44,8 @@ const useRecord = () => {
 
     const videoLink = URL.createObjectURL(blob);
     setVideoSrc(videoLink);
+
+    // store to firebase
   };
 
   const createRecorder = (stream: MediaStream) => {

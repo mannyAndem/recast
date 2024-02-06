@@ -10,18 +10,22 @@ const Modal = ({
   children,
   setVisible,
 }: PropsWithChildren<ModalProps>) => {
-  const handleClose = () => {
-    setVisible(false);
+  const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const target = e.target as HTMLDivElement;
+    if (target.id === "container") {
+      setVisible(false);
+    }
   };
 
   return (
     <div
       onClick={handleClose}
+      id="container"
       className={`${
         visible ? "fixed" : "hidden"
-      } top-0 left-0 bg-veryLightPurple opacity-40 backdrop-blur-sm right-0 min-h-screen flex items-center justify-center`}
+      } z-20 top-0 left-0 bg-veryLightPurple bg-opacity-40 backdrop-blur-sm right-0 min-h-screen flex items-center justify-center`}
     >
-      <div className="w-full max-w-[600px] bg-purple text-smoke rounded-md shaodw-md">
+      <div className="p-5 w-full max-w-[600px] border  border-lightPurple bg-smoke text-purple rounded-md shaodw-md">
         {children}
       </div>
     </div>
