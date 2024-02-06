@@ -3,20 +3,35 @@ import { useEffect, useState } from "react";
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
-  const [video, setVideo] = useState<string | null>(null);
+  const [videoSrc, setVideoSrc] = useState<string | null>(null);
 
+  const startRecording = () => {
+    createStream();
+  };
+
+  const stopRecording = () => {
+    recorder?.stop();
+    setRecorder(null);
+    setStream(null);
+  };
+
+  console.log(videoSrc);
   useEffect(() => {
-    if (stream && !recorder) {
+    if (stream) {
       const recorder = createRecorder(stream);
       setRecorder(recorder);
     }
   }, [stream]);
 
-  const recordScreen = async () => {
-    return await navigator.mediaDevices.getDisplayMedia({
+  const createStream = async () => {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
       audio: true,
-      video: { mediaSource: "screen" } as any,
+      video: true,
     });
+
+    console.log(stream);
+
+    setStream(stream);
   };
 
   const saveVideo = (chunks: Blob[]) => {
@@ -24,23 +39,25 @@ const useRecord = () => {
       type: "video/mp4",
     });
 
-    const blobSrc = URL.createObjectURL(blob);
-    console.log(blobSrc);
-    setVideo(blobSrc);
-    // TODO: logic to save blob to firestore;
+    const videoLink = URL.createObjectURL(blob);
+    setVideoSrc(videoLink);
   };
 
   const createRecorder = (stream: MediaStream) => {
+    const recorder = new MediaRecorder(stream);
     let chunks: Blob[] = [];
 
-    const recorder = new MediaRecorder(stream);
-
     recorder.ondataavailable = (e: BlobEvent) => {
-      chunks.push(e.data);
+      if (e.data.size > 0) {
+        console.log("chunk added");
+        chunks.push(e.data);
+      }
     };
 
     recorder.onstop = () => {
+      console.log("Recording stopped.");
       saveVideo(chunks);
+      chunks = [];
     };
 
     recorder.start(200);
@@ -48,19 +65,7 @@ const useRecord = () => {
     return recorder;
   };
 
-  const startRecording = async () => {
-    const stream = await recordScreen();
-    setStream(stream);
-  };
-
-  const stopRecording = () => {
-    if (recorder) {
-      recorder.stop();
-      console.log("Recording stopped");
-    }
-  };
-
-  return { startRecording, stopRecording, video };
+  return { videoSrc, startRecording, stopRecording };
 };
 
 export default useRecord;

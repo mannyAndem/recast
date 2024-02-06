@@ -2,8 +2,7 @@ import useRecord from "../../../hooks/useRecord";
 import Video from "./Video";
 
 const VideosList = () => {
-  const { video } = useRecord();
-  console.log(video);
+  const { videoSrc } = useRecord();
 
   return (
     <div className="grid grid-cols-3 gap-8">
@@ -12,7 +11,7 @@ const VideosList = () => {
           You haven't recorded any videos yet.
         </span>
       </div> */}
-      <div className="h-40">{video && <Video src={video} />}</div>
+      <Video src={videoSrc!} />
     </div>
   );
 };
