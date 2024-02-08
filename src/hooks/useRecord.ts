@@ -1,24 +1,35 @@
 import { useEffect, useState } from "react";
 import useStorage from "./useStorage";
+import { formatISO } from "date-fns";
+import useFirestore from "./useFirestore";
+import { useAuthContext } from "../contexts/AuthContext";
+import { formatDate } from "date-fns/format";
 
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
-  const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  // const [videoSrc, setVideoSrc] = useState<string | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const { uploadFile } = useStorage();
+  const { createDoc } = useFirestore("videos");
+
+  const { user } = useAuthContext();
 
   const startRecording = () => {
+    setIsRecording(true);
     createStream();
   };
 
   const stopRecording = () => {
     recorder?.stop();
+    stream?.getTracks().forEach((track) => track.stop());
     setRecorder(null);
     setStream(null);
+    setIsRecording(false);
   };
 
-  console.log(videoSrc);
   useEffect(() => {
     if (stream) {
       const recorder = createRecorder(stream);
@@ -37,15 +48,29 @@ const useRecord = () => {
     setStream(stream);
   };
 
-  const saveVideo = (chunks: Blob[]) => {
+  const saveVideo = async (chunks: Blob[]) => {
+    setIsSaving(true);
     const blob = new Blob(chunks, {
       type: "video/mp4",
     });
 
-    const videoLink = URL.createObjectURL(blob);
-    setVideoSrc(videoLink);
-
+    const fileName = `VID-${formatDate(new Date(), "yyyyMMddhhmm")}.mp4`;
+    console.log(fileName);
     // store to firebase
+    try {
+      const url = await uploadFile(blob, fileName);
+
+      const data = {
+        name: fileName.replace(".mp4", ""),
+        ownedBy: user?.uid,
+        url,
+        length: blob.size * 200 * 60,
+      };
+      await createDoc(data);
+      setIsSaving(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const createRecorder = (stream: MediaStream) => {
@@ -70,7 +95,7 @@ const useRecord = () => {
     return recorder;
   };
 
-  return { videoSrc, startRecording, stopRecording };
+  return { startRecording, stopRecording, isRecording, isSaving };
 };
 
 export default useRecord;

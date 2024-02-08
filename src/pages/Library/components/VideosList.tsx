@@ -1,9 +1,11 @@
-import useRecord from "../../../hooks/useRecord";
-import Video from "./Video";
+import { DocumentData } from "firebase/firestore";
+import VideoCard from "./VideoCard";
 
-const VideosList = () => {
-  const { videoSrc } = useRecord();
+interface VideosListProps {
+  videos: DocumentData[];
+}
 
+const VideosList = ({ videos }: VideosListProps) => {
   return (
     <div className="grid grid-cols-3 gap-8">
       {/* <div className="mt-24 col-span-3">
@@ -11,7 +13,9 @@ const VideosList = () => {
           You haven't recorded any videos yet.
         </span>
       </div> */}
-      <Video src={videoSrc!} />
+      {videos.map((video) => (
+        <VideoCard video={video} />
+      ))}
     </div>
   );
 };

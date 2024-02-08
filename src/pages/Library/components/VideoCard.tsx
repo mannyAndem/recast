@@ -1,10 +1,16 @@
-const VideoCard = () => {
+import { formatDate } from "date-fns";
+import { DocumentData } from "firebase/firestore";
+
+interface VideoProps {
+  video: DocumentData;
+}
+
+const VideoCard = ({ video }: VideoProps) => {
   return (
-    <div className="w-full rounded-md shadow-sm p-4 font-inter flex flex-col gap-6 border-lightPurple border">
-      <div className="h-36 bg-purple rounded-md bg-opacity-50"></div>
-      <div className="flex items-center justify-between text-purple text-xl">
-        <span className="font-semibold">Video 1</span>
-        <span className="font-medium">2:03</span>
+    <div className="font-inter flex flex-col gap-4  border-2  border-lightPurple rounded-md shadow-sm overflow-hidden">
+      <video src={video.url} className="w-full h-full" />
+      <div className="px-2 pb-4 flex items-center">
+        <span className="text-xl">{video.name}</span>
       </div>
     </div>
   );

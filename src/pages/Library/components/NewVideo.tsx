@@ -2,8 +2,11 @@ import Button from "../../../components/ui/Button";
 import { BsPlay } from "react-icons/bs";
 import { BiStop } from "react-icons/bi";
 import newVideoIllustration from "../../../assets/images/Video tutorial-bro.png";
+import useRecord from "../../../hooks/useRecord";
 
 const NewVideo = () => {
+  const { startRecording, stopRecording, isRecording } = useRecord();
+
   return (
     <div className="font-inter">
       <h3 className="mb-8 text-3xl font-medium font-grotesk">New Video</h3>
@@ -14,13 +17,13 @@ const NewVideo = () => {
         />
       </div>
       <div className="flex items-center gap-4">
-        <Button>
+        <Button onClick={startRecording} disabled={isRecording}>
           <div className="flex items-center justify-center gap-4">
             <span>Start</span>
             <BsPlay size={28} color="#F1EAFF" />
           </div>
         </Button>
-        <Button>
+        <Button onClick={stopRecording} disabled={!isRecording}>
           <div className="flex items-center justify-center gap-4">
             <span>Stop</span>
             <BiStop size={28} color="#F1EAFF" />
