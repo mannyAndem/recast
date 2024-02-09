@@ -1,8 +1,8 @@
-import { DocumentData } from "firebase/firestore";
 import VideoCard from "./VideoCard";
+import { Video } from "../../../shared.types";
 
 interface VideosListProps {
-  videos: DocumentData[];
+  videos: Video[];
 }
 
 const VideosList = ({ videos }: VideosListProps) => {

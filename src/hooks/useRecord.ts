@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import useStorage from "./useStorage";
-import { formatISO } from "date-fns";
 import useFirestore from "./useFirestore";
 import { useAuthContext } from "../contexts/AuthContext";
 import { formatDate } from "date-fns/format";
@@ -48,7 +47,7 @@ const useRecord = () => {
     setStream(stream);
   };
 
-  const saveVideo = async (chunks: Blob[]) => {
+  const saveVideo = async (chunks: Blob[], duration: number) => {
     setIsSaving(true);
     const blob = new Blob(chunks, {
       type: "video/mp4",
@@ -64,7 +63,7 @@ const useRecord = () => {
         name: fileName.replace(".mp4", ""),
         ownedBy: user?.uid,
         url,
-        length: blob.size * 200 * 60,
+        length: duration,
       };
       await createDoc(data);
       setIsSaving(false);
@@ -75,6 +74,8 @@ const useRecord = () => {
 
   const createRecorder = (stream: MediaStream) => {
     const recorder = new MediaRecorder(stream);
+    let startTime: number;
+    let stopTime: number;
     let chunks: Blob[] = [];
 
     recorder.ondataavailable = (e: BlobEvent) => {
@@ -85,11 +86,15 @@ const useRecord = () => {
     };
 
     recorder.onstop = () => {
+      stopTime = Date.now();
       console.log("Recording stopped.");
-      saveVideo(chunks);
-      chunks = [];
+      const duration = stopTime - startTime;
+      saveVideo(chunks, duration);
     };
 
+    recorder.onstart = () => {
+      startTime = Date.now();
+    };
     recorder.start(200);
 
     return recorder;

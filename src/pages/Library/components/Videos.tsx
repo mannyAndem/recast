@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import useFirestore from "../../../hooks/useFirestore";
 import NewVideoButton from "./NewVideoButton";
 import VideosList from "./VideosList";
-import { DocumentData } from "firebase/firestore";
+import { Video } from "../../../shared.types";
 
 const Videos = () => {
-  const { getCollection, addSnapshotListener } = useFirestore("videos");
-  const [videos, setVideos] = useState<DocumentData[] | null>(null);
+  const { addSnapshotListener } = useFirestore("videos");
+  const [videos, setVideos] = useState<Video[] | null>(null);
 
   useEffect(() => {
     const unsubscribe = addSnapshotListener((snapshot) => {
-      let videos: DocumentData[] = [];
-      snapshot.forEach((doc) => videos.push(doc.data()));
+      let videos: Video[] = [];
+      snapshot.forEach((doc) =>
+        videos.push({ id: doc.id, ...doc.data() } as Video)
+      );
       console.log(snapshot.docs);
       setVideos(videos);
     });
