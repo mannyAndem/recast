@@ -1,4 +1,9 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import { storage } from "../firebase/firebase";
 
 const useStorage = () => {
@@ -9,7 +14,12 @@ const useStorage = () => {
     return url;
   };
 
-  return { uploadFile };
+  const deleteFile = async (name: string) => {
+    const fileRef = ref(storage, name);
+    await deleteObject(fileRef);
+  };
+
+  return { uploadFile, deleteFile };
 };
 
 export default useStorage;

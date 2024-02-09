@@ -5,6 +5,7 @@ import { Status, Video } from "../../shared.types";
 import VideoDisplay from "./components/VideoDisplay";
 import VideoActions from "./components/VideoActions";
 import Loader from "../../components/ui/Loader";
+import BackButton from "../../components/feature/BackButton";
 
 const VideoPage = () => {
   const { id } = useParams();
@@ -29,7 +30,10 @@ const VideoPage = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-24 px-16 bg-smoke">
+    <div className="relative min-h-screen py-24 px-16 bg-smoke">
+      <div className="absolute top-4 left-4">
+        <BackButton />
+      </div>
       {status === "success" ? (
         <div className="grid grid-cols-6 gap-8">
           <div className="col-span-5">

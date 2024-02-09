@@ -3,13 +3,15 @@ import useStorage from "./useStorage";
 import useFirestore from "./useFirestore";
 import { useAuthContext } from "../contexts/AuthContext";
 import { formatDate } from "date-fns/format";
+import { Status } from "../shared.types";
 
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   // const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState<Status>("idle");
+  const [videoId, setVideoId] = useState<string | null>(null);
 
   const { uploadFile } = useStorage();
   const { createDoc } = useFirestore("videos");
@@ -48,7 +50,7 @@ const useRecord = () => {
   };
 
   const saveVideo = async (chunks: Blob[], duration: number) => {
-    setIsSaving(true);
+    setUploadStatus("pending");
     const blob = new Blob(chunks, {
       type: "video/mp4",
     });
@@ -65,10 +67,12 @@ const useRecord = () => {
         url,
         length: duration,
       };
-      await createDoc(data);
-      setIsSaving(false);
+      const id = await createDoc(data);
+      setVideoId(id);
+      setUploadStatus("success");
     } catch (err) {
       console.error(err);
+      setUploadStatus("error");
     }
   };
 
@@ -100,7 +104,7 @@ const useRecord = () => {
     return recorder;
   };
 
-  return { startRecording, stopRecording, isRecording, isSaving };
+  return { startRecording, stopRecording, isRecording, uploadStatus, videoId };
 };
 
 export default useRecord;

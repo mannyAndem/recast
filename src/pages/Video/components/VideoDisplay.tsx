@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Video } from "../../../shared.types";
 import { parseMillisecondsToMinuteString } from "../../../utils/parseMillisecondsToMinuteString";
 
@@ -6,12 +7,19 @@ interface VideoDisplayProps {
 }
 
 const VideoDisplay = ({ video }: VideoDisplayProps) => {
+  const videoRef = useRef<null | HTMLVideoElement>(null);
+
+  useEffect(() => {
+    videoRef?.current?.load();
+  }, []);
+
   return (
-    <div className="flex flex-col gap-4 text-purple w-full  ">
+    <div className="flex flex-col gap-8 text-purple w-full  ">
       <video
         src={video.url}
         className="w-full h-[60vh] rounded-md shadow-sm border-purple border"
         controls
+        ref={videoRef}
       />
       <div className="flex items-center justify-between">
         <span className="font-medium font-grotesk text-4xl">{video.name}</span>

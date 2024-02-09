@@ -3,9 +3,19 @@ import { BsPlay } from "react-icons/bs";
 import { BiStop } from "react-icons/bi";
 import newVideoIllustration from "../../../assets/images/Video tutorial-bro.png";
 import useRecord from "../../../hooks/useRecord";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NewVideo = () => {
-  const { startRecording, stopRecording, isRecording } = useRecord();
+  const { startRecording, stopRecording, uploadStatus, isRecording, videoId } =
+    useRecord();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (uploadStatus === "success") {
+      navigate(`/videos/${videoId}`);
+    }
+  }, [uploadStatus]);
 
   return (
     <div className="font-inter">
@@ -23,7 +33,11 @@ const NewVideo = () => {
             <BsPlay size={28} color="#F1EAFF" />
           </div>
         </Button>
-        <Button onClick={stopRecording} disabled={!isRecording}>
+        <Button
+          onClick={stopRecording}
+          disabled={!isRecording}
+          pending={uploadStatus === "pending"}
+        >
           <div className="flex items-center justify-center gap-4">
             <span>Stop</span>
             <BiStop size={28} color="#F1EAFF" />

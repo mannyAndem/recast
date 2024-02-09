@@ -1,12 +1,15 @@
 import {
   DocumentData,
+  QueryFieldFilterConstraint,
   QuerySnapshot,
   addDoc,
   collection,
+  deleteDoc,
   doc,
   getDoc,
   getDocs,
   onSnapshot,
+  query,
   setDoc,
 } from "firebase/firestore";
 import { db } from "../firebase/firebase";
@@ -17,14 +20,13 @@ const useFirestore = (col: string) => {
   };
 
   const createDoc = async (data: unknown) => {
-    await addDoc(collection(db, col), data);
+    const docRef = await addDoc(collection(db, col), data);
+    return docRef.id;
   };
 
   const fetchDoc = async (id: string) => {
     return getDoc(doc(db, col, id));
   };
-
-  const queryCollection = async () => {};
 
   const getCollection = async () => {
     let data: DocumentData[] = [];
@@ -35,9 +37,20 @@ const useFirestore = (col: string) => {
   };
 
   const addSnapshotListener = (
-    callback: (snapshot: QuerySnapshot<DocumentData, DocumentData>) => void
+    callback: (snapshot: QuerySnapshot<DocumentData, DocumentData>) => void,
+    queryExpression?: QueryFieldFilterConstraint
   ) => {
+    if (queryExpression) {
+      const q = query(collection(db, col), queryExpression);
+      return onSnapshot(q, callback);
+    }
+
     return onSnapshot(collection(db, col), callback);
+  };
+
+  const deleteDocument = async (id: string) => {
+    const docRef = doc(db, col, id);
+    await deleteDoc(docRef);
   };
 
   return {
@@ -46,6 +59,7 @@ const useFirestore = (col: string) => {
     getCollection,
     addSnapshotListener,
     fetchDoc,
+    deleteDocument,
   };
 };
 
