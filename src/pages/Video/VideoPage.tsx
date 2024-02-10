@@ -18,7 +18,7 @@ const VideoPage = () => {
       setStatus("pending");
       try {
         const doc = await fetchDoc(id!);
-        setVideo(doc.data() as Video);
+        setVideo({ ...doc.data(), id: doc.id } as Video);
         setStatus("success");
       } catch (err) {
         console.error(err);

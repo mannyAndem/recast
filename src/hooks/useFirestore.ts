@@ -32,7 +32,7 @@ const useFirestore = (col: string) => {
     let data: DocumentData[] = [];
     const snapshot = await getDocs(collection(db, col));
     console.log(snapshot.docs);
-    snapshot.forEach((doc) => data.push(doc.data()));
+    snapshot.forEach((doc) => data.push({ ...doc.data(), id: doc.id }));
     return data;
   };
 
@@ -49,6 +49,7 @@ const useFirestore = (col: string) => {
   };
 
   const deleteDocument = async (id: string) => {
+    console.log(col, id);
     const docRef = doc(db, col, id);
     await deleteDoc(docRef);
   };

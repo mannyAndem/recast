@@ -1,11 +1,12 @@
 import { BiDownload } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
-import { Video } from "../../../shared.types";
+import { Status, Video } from "../../../shared.types";
 import useDownload from "../../../hooks/useDownload";
 import Button from "../../../components/ui/Button";
 import useFirestore from "../../../hooks/useFirestore";
 import useStorage from "../../../hooks/useStorage";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface VideoActionsProps {
   video: Video;
@@ -17,16 +18,22 @@ const VideoActions = ({ video }: VideoActionsProps) => {
   const { deleteFile } = useStorage();
   const navigate = useNavigate();
 
+  const [deleteStatus, setDeleteStatus] = useState<Status>("idle");
+
   const handleDownload = async () => {
     await downloadBlob(video.url, video.name);
   };
 
   const handleDelete = async () => {
+    setDeleteStatus("pending");
+
     try {
       await deleteDocument(video.id);
       await deleteFile(`${video.name}.mp4`);
+      setDeleteStatus("success");
       navigate("/library");
     } catch (err) {
+      setDeleteStatus("error");
       console.error(err);
     }
   };
@@ -38,7 +45,7 @@ const VideoActions = ({ video }: VideoActionsProps) => {
           <BiDownload size={36} className="text-smoke" />
         </div>
       </Button>
-      <Button onClick={handleDelete}>
+      <Button onClick={handleDelete} pending={deleteStatus === "pending"}>
         <div className="flex justify-center items-center">
           <MdDelete size={36} className="text-smoke" />
         </div>
