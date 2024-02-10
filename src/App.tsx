@@ -3,6 +3,7 @@ import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
 import Library from "./pages/Library/Library";
 import VideoPage from "./pages/Video/VideoPage";
+import ProtectedRoute from "./components/feature/ProtectedRoute";
 
 function App() {
   return (
@@ -10,7 +11,14 @@ function App() {
       <Routes>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/library" element={<Library />} />
+        <Route
+          path="/library"
+          element={
+            <ProtectedRoute>
+              <Library />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/videos/:id" element={<VideoPage />} />
       </Routes>
     </>
