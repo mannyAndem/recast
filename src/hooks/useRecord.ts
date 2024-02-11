@@ -8,7 +8,6 @@ import { Status } from "../shared.types";
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
-  // const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<Status>("idle");
   const [videoId, setVideoId] = useState<string | null>(null);
@@ -77,7 +76,7 @@ const useRecord = () => {
   };
 
   const createRecorder = (stream: MediaStream) => {
-    const recorder = new MediaRecorder(stream);
+    const recorder = new MediaRecorder(stream, { mimeType: "video/mp4" });
     let startTime: number;
     let stopTime: number;
     let chunks: Blob[] = [];

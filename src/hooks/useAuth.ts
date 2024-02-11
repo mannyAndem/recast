@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
@@ -30,7 +31,10 @@ const useAuth = () => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  return { user, status, signup, login };
+  const logout = async () => {
+    await signOut(auth);
+  };
+  return { user, status, signup, login, logout };
 };
 
 export default useAuth;

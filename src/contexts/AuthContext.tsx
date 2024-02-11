@@ -7,15 +7,16 @@ interface AuthContext {
   user: User | null;
   signup: (email: string, password: string, name: string) => Promise<void>;
   login: (email: string, password: string) => Promise<UserCredential>;
+  logout: () => Promise<void>;
 }
 
 const authContext = createContext<AuthContext | null>(null);
 
 const AuthContextProvider = ({ children }: PropsWithChildren) => {
-  const { user, signup, login, status } = useAuth();
+  const { user, signup, login, status, logout } = useAuth();
 
   return (
-    <authContext.Provider value={{ user, signup, login }}>
+    <authContext.Provider value={{ user, signup, login, logout }}>
       {status === "success" && children}
     </authContext.Provider>
   );
