@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }: PropsWithChildren) => {
   const { pathname } = useLocation();
 
   if (!user) {
-    return <Navigate to="login" state={{ from: pathname }} />;
+    return <Navigate to="/login" state={{ from: pathname }} />;
   }
 
   return children;
