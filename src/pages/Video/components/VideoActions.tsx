@@ -7,6 +7,7 @@ import useFirestore from "../../../hooks/useFirestore";
 import useStorage from "../../../hooks/useStorage";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 interface VideoActionsProps {
   video: Video;
@@ -31,12 +32,20 @@ const VideoActions = ({ video }: VideoActionsProps) => {
       await deleteDocument(video.id);
       await deleteFile(`${video.name}.mp4`);
       setDeleteStatus("success");
-      navigate("/library");
     } catch (err) {
       setDeleteStatus("error");
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (deleteStatus === "success") {
+      navigate("/library");
+    }
+    if (deleteStatus === "error") {
+      toast.error("An error occurred during delete.");
+    }
+  }, [deleteStatus]);
 
   return (
     <div className="h-full flex flex-col gap-8 items-center justify-center">
