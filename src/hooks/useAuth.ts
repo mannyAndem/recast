@@ -16,13 +16,8 @@ const useAuth = () => {
 
   useEffect(() => {
     return onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user);
-        setUser(user);
-        setStatus("success");
-      } else {
-        setStatus("idle");
-      }
+      setUser(user);
+      setStatus("success");
     });
   });
 

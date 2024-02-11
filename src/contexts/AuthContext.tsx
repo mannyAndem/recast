@@ -12,11 +12,11 @@ interface AuthContext {
 const authContext = createContext<AuthContext | null>(null);
 
 const AuthContextProvider = ({ children }: PropsWithChildren) => {
-  const { user, signup, login } = useAuth();
+  const { user, signup, login, status } = useAuth();
 
   return (
     <authContext.Provider value={{ user, signup, login }}>
-      {children}
+      {status === "success" && children}
     </authContext.Provider>
   );
 };
