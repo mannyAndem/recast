@@ -9,7 +9,7 @@ const BackButton = () => {
   };
   return (
     <button onClick={handleClick}>
-      <BiArrowBack size={24} className="text-purple" />
+      <BiArrowBack size={24} className="text-blue-400" />
     </button>
   );
 };

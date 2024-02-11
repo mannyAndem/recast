@@ -10,7 +10,7 @@ const VideoCard = ({ video }: VideoProps) => {
   return (
     <Link
       to={`/videos/${video.id}`}
-      className="font-inter flex flex-col gap-4 text-purple  border-2  border-lightPurple rounded-md shadow-sm overflow-hidden"
+      className="font-inter flex flex-col gap-4 text-blue-400 border-2 border-blue-400 rounded-md shadow-sm overflow-hidden"
     >
       <video src={video.url} className="w-full h-full" />
       <div className="px-2 pb-4 flex items-center justify-between">

@@ -31,7 +31,7 @@ const Videos = () => {
   console.log(status);
   return (
     <div>
-      <div className="text-purple py-4 border-b-2 border-purple flex items-center justify-between font-inter">
+      <div className="text-blue-400 py-4 border-b-2 border-blue-400 flex items-center justify-between font-inter">
         <h2 className="text-3xl font-medium font-grotesk">Library</h2>
         <div>
           <NewVideoButton />

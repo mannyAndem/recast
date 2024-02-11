@@ -18,7 +18,7 @@ const InputGroup = ({
   touched,
 }: InputGroupProps) => {
   return (
-    <div className="flex flex-col gap-3 text-purple">
+    <div className="flex flex-col gap-3 text-gray-800">
       <label
         htmlFor={name}
         className={

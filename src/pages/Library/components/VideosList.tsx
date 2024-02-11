@@ -10,7 +10,7 @@ const VideosList = ({ videos }: VideosListProps) => {
     <div className="grid grid-cols-3 gap-8">
       {videos.length === 0 ? (
         <div className="mt-24 col-span-3">
-          <span className="block font-semibold text-center text-4xl text-purple">
+          <span className="block font-semibold text-center text-4xl text-blue-400">
             You haven't recorded any videos yet.
           </span>
         </div>

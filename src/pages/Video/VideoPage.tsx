@@ -30,7 +30,7 @@ const VideoPage = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen py-24 px-16 bg-smoke">
+    <div className="relative min-h-screen py-24 px-16 bg-slate-100">
       <div className="absolute top-4 left-4">
         <BackButton />
       </div>

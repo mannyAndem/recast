@@ -14,10 +14,10 @@ const VideoDisplay = ({ video }: VideoDisplayProps) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-8 text-purple w-full  ">
+    <div className="flex flex-col gap-8 text-blue-400 w-full  ">
       <video
         src={video.url}
-        className="w-full h-[60vh] rounded-md shadow-sm border-purple border"
+        className="w-full h-[60vh] rounded-md shadow-sm border-blue-400 border-2"
         controls
         ref={videoRef}
       />

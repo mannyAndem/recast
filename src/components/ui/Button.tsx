@@ -16,8 +16,8 @@ const Button = ({
   disabled,
   onClick,
 }: PropsWithChildren<ButtonProps>) => {
-  const primaryClass = "bg-purple text-smoke";
-  const secondaryClass = "bg-transparent text-purple border-purple";
+  const primaryClass = "bg-blue-400 text-slate-100";
+  const secondaryClass = "bg-transparent text-blue-400 border-blue-400 border";
 
   return (
     <button

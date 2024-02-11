@@ -1,7 +1,7 @@
 import Button from "../../../components/ui/Button";
 import { BsPlay } from "react-icons/bs";
 import { BiStop } from "react-icons/bi";
-import newVideoIllustration from "../../../assets/images/Video tutorial-bro.png";
+import newVideoIllustration from "../../../assets/images/Monitor-bro.png";
 import useRecord from "../../../hooks/useRecord";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +19,8 @@ const NewVideo = () => {
 
   return (
     <div className="font-inter">
-      <h3 className="mb-8 text-3xl font-medium font-grotesk">New Video</h3>
-      <div className="mb-8">
+      <h3 className="mb-12 text-3xl font-medium font-grotesk">New Video</h3>
+      <div className="mb-12">
         <img
           src={newVideoIllustration}
           className="max-h-60 w-full object-cover"

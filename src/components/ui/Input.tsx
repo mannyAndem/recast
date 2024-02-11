@@ -28,8 +28,8 @@ const Input = ({
       className={`${
         error && touched
           ? "border-red-400 bg-red-100 focus:outline-red-400"
-          : "bg-veryLightPurple"
-      } p-3 rounded-md shadow-sm border-2 bg-opacity-20 text-purple border-lightPurple focus:outline-purple`}
+          : "bg-white"
+      } p-3 rounded-md font-inter shadow-sm border-2 bg-opacity-20 text-gray-900 border-blue-400 focus:outline-blue-700`}
     />
   );
 };
