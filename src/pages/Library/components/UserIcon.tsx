@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuthContext } from "../../../contexts/AuthContext";
 import Dropdown from "../../../components/ui/Dropdown";
-import Button from "../../../components/ui/Button";
 import { BiCaretDown } from "react-icons/bi";
 import LogoutButton from "../../../components/feature/LogoutButton";
 
@@ -26,7 +25,7 @@ const UserIcon = () => {
           } transform transition-all duration-200 ease-out text-slate-100`}
         />
       </button>
-      <Dropdown visible={dropdownVisible} setVisible={setDropdownVisible}>
+      <Dropdown visible={dropdownVisible}>
         <div className="flex flex-col items-center gap-4 text-blue-400 text-2xl p-3">
           <LogoutButton />
         </div>

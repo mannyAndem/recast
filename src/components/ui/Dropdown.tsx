@@ -1,21 +1,11 @@
-import { PropsWithChildren, useEffect, useRef } from "react";
-import { handleClickOutside } from "../../utils/handleClickOutside";
+import { PropsWithChildren, useRef } from "react";
 
 interface DropdownProps {
   visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Dropdown = ({
-  visible,
-  setVisible,
-  children,
-}: PropsWithChildren<DropdownProps>) => {
+const Dropdown = ({ visible, children }: PropsWithChildren<DropdownProps>) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const closeDropdown = () => {
-    setVisible(false);
-  };
 
   return (
     <div

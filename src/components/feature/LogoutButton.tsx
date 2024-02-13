@@ -2,13 +2,11 @@ import { useEffect, useState } from "react";
 import { useAuthContext } from "../../contexts/AuthContext";
 import Button from "../ui/Button";
 import { Status } from "../../shared.types";
-import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 const LogoutButton = () => {
   const { logout } = useAuthContext();
   const [status, setStatus] = useState<Status>("idle");
-  const navigate = useNavigate();
 
   const handleClick = async () => {
     setStatus("pending");
