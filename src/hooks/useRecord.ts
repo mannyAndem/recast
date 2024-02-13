@@ -4,6 +4,7 @@ import useFirestore from "./useFirestore";
 import { useAuthContext } from "../contexts/AuthContext";
 import { formatDate } from "date-fns/format";
 import { Status } from "../shared.types";
+import ysFixWebmDuration from "fix-webm-duration";
 
 const useRecord = () => {
   const [stream, setStream] = useState<MediaStream | null>(null);
@@ -54,25 +55,27 @@ const useRecord = () => {
       type: "video/webm",
     });
 
-    const fileName = `VID-${formatDate(new Date(), "yyyyMMddhhmm")}.webm`;
-    console.log(fileName);
-    // store to firebase
-    try {
-      const url = await uploadFile(blob, fileName);
+    const saveToFirestore = async (blob: Blob) => {
+      const fileName = `VID-${formatDate(new Date(), "yyyyMMddhhmm")}.webm`;
 
-      const data = {
-        name: fileName.replace(".webm", ""),
-        ownedBy: user?.uid,
-        url,
-        length: duration,
-      };
-      const id = await createDoc(data);
-      setVideoId(id);
-      setUploadStatus("success");
-    } catch (err) {
-      console.error(err);
-      setUploadStatus("error");
-    }
+      try {
+        const url = await uploadFile(blob, fileName);
+
+        const data = {
+          name: fileName.replace(".webm", ""),
+          ownedBy: user?.uid,
+          url,
+          length: duration,
+        };
+        const id = await createDoc(data);
+        setVideoId(id);
+        setUploadStatus("success");
+      } catch (err) {
+        console.error(err);
+        setUploadStatus("error");
+      }
+    };
+    await ysFixWebmDuration(blob, duration, saveToFirestore);
   };
 
   const createRecorder = (stream: MediaStream) => {
