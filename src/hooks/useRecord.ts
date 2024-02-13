@@ -51,17 +51,17 @@ const useRecord = () => {
   const saveVideo = async (chunks: Blob[], duration: number) => {
     setUploadStatus("pending");
     const blob = new Blob(chunks, {
-      type: "video/mp4",
+      type: "video/webm",
     });
 
-    const fileName = `VID-${formatDate(new Date(), "yyyyMMddhhmm")}.mp4`;
+    const fileName = `VID-${formatDate(new Date(), "yyyyMMddhhmm")}.webm`;
     console.log(fileName);
     // store to firebase
     try {
       const url = await uploadFile(blob, fileName);
 
       const data = {
-        name: fileName.replace(".mp4", ""),
+        name: fileName.replace(".webm", ""),
         ownedBy: user?.uid,
         url,
         length: duration,
@@ -76,7 +76,7 @@ const useRecord = () => {
   };
 
   const createRecorder = (stream: MediaStream) => {
-    const recorder = new MediaRecorder(stream, { mimeType: "video/mp4" });
+    const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
     let startTime: number;
     let stopTime: number;
     let chunks: Blob[] = [];
