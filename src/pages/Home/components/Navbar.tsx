@@ -3,7 +3,7 @@ import Button from "../../../components/ui/Button";
 
 const Navbar = () => {
   return (
-    <nav className="p-16 flex justify-between items-center text-gray-800">
+    <nav className="px-16 py-5 flex justify-between items-center text-gray-800">
       <Link to="/" className="text-4xl font-grotesk font-semibold">
         RECAST
       </Link>
