@@ -7,6 +7,8 @@ import { Status } from "../shared.types";
 import ysFixWebmDuration from "fix-webm-duration";
 
 const useRecord = () => {
+  console.log(MediaRecorder.isTypeSupported("video/mp4"));
+
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -40,7 +42,7 @@ const useRecord = () => {
 
   const createStream = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
-      audio: true,
+      audio: false,
       video: true,
     });
 

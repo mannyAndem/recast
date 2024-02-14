@@ -37,7 +37,7 @@ const Signup = () => {
       className="bg-[image:var(--image-url)] h-screen"
     >
       <div className="p-5 w-full h-full bg-gray-700 bg-opacity-70 flex justify-center items-center">
-        <div className="w-full max-w-[600px] shadow-md rounded-md p-5 bg-slate-100 text-gray-800 lg:p-8">
+        <div className="w-full max-w-[800px] shadow-md rounded-md p-5 bg-slate-100 text-gray-800 lg:p-8">
           <div className="flex justify-end font-grotesk">
             <Link to="/" className="font-semibold lg:text-2xl">
               RECAST

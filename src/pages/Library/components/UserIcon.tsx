@@ -15,7 +15,7 @@ const UserIcon = () => {
   return (
     <div className="relative">
       <button onClick={handleClick} className="flex items-center gap-2">
-        <div className="bg-slate-100 w-12 h-12 rounded-full text-blue-400 shadow-sm text-2xl font-bold flex items-center justify-center">
+        <div className="bg-slate-100 w-12 h-12 rounded-full text-blue-400 shadow-sm ltext-xl g:text-2xl font-bold flex items-center justify-center">
           {user?.displayName?.charAt(0).toUpperCase()}
         </div>
         <BiCaretDown
