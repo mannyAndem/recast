@@ -48,13 +48,17 @@ const VideoActions = ({ video }: VideoActionsProps) => {
   }, [deleteStatus]);
 
   return (
-    <div className="h-full flex flex-col gap-8 items-center justify-center">
+    <div className="w-full flex gap-8 items-center justify-center lg:flex-col lg:h-full">
       <Button onClick={handleDownload} pending={status === "pending"}>
         <div className="flex items-center justify-center">
           <BiDownload size={36} className="text-smoke" />
         </div>
       </Button>
-      <Button onClick={handleDelete} pending={deleteStatus === "pending"}>
+      <Button
+        onClick={handleDelete}
+        variant="secondary"
+        pending={deleteStatus === "pending"}
+      >
         <div className="flex justify-center items-center">
           <MdDelete size={36} className="text-smoke" />
         </div>

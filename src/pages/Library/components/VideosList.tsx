@@ -7,7 +7,7 @@ interface VideosListProps {
 
 const VideosList = ({ videos }: VideosListProps) => {
   return (
-    <div className="grid grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
       {videos.length === 0 ? (
         <div className="mt-24 col-span-3">
           <span className="block font-semibold text-center text-4xl text-blue-400">

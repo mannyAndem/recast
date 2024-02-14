@@ -58,7 +58,7 @@ const LoginForm = () => {
         validationSchema={validationSchema}
       >
         {({ values, errors, touched }) => (
-          <Form className="flex flex-col gap-6">
+          <Form className="flex flex-col gap-3 lg:gap-6">
             <InputGroup
               name="email"
               value={values.email}
@@ -74,7 +74,7 @@ const LoginForm = () => {
               error={errors.password}
               type="password"
             />
-            <div className="mt-16">
+            <div className="mt-8 lg:mt-16">
               <Button pending={status === "pending"}>Login</Button>
             </div>
           </Form>

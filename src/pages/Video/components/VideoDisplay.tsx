@@ -17,13 +17,13 @@ const VideoDisplay = ({ video }: VideoDisplayProps) => {
     <div className="flex flex-col gap-8 text-blue-400 w-full  ">
       <video
         src={video.url}
-        className="w-full h-[60vh] rounded-md shadow-sm border-blue-400 border-2"
+        className="w-full rounded-md shadow-sm border-blue-400 border-2"
         controls
         ref={videoRef}
       />
-      <div className="flex items-center justify-between">
-        <span className="font-medium font-grotesk text-4xl">{video.name}</span>
-        <span className="font-inter text-4xl">
+      <div className="flex items-center justify-between text-xl lg:text-4xl">
+        <span className="font-medium font-grotesk">{video.name}</span>
+        <span className="font-inter">
           {parseMillisecondsToMinuteString(video.length)}
         </span>
       </div>

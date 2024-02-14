@@ -17,13 +17,13 @@ const Button = ({
   onClick,
 }: PropsWithChildren<ButtonProps>) => {
   const primaryClass = "bg-blue-400 text-slate-100";
-  const secondaryClass = "bg-transparent text-blue-400 border-blue-400 border";
+  const secondaryClass = "bg-slate-100 text-blue-400 border-blue-400 border";
 
   return (
     <button
       disabled={disabled}
       onClick={onClick}
-      className={`relative text-2xl w-full p-3 rounded-md shadow-sm ${
+      className={`relative w-full p-3 text-xl rounded-md shadow-sm lg:text-2xl ${
         variant === "secondary" ? secondaryClass : primaryClass
       } font-grotesk disabled:opacity-60`}
     >

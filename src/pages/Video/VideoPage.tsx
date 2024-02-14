@@ -30,16 +30,16 @@ const VideoPage = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen py-24 px-16 bg-slate-100">
+    <div className="flex justify-center items-center relative min-h-screen py-24 px-5 bg-slate-100 lg:px-16 lg:block">
       <div className="absolute top-4 left-4">
         <BackButton />
       </div>
       {status === "success" ? (
-        <div className="grid grid-cols-6 gap-8">
+        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-6">
           <div className="col-span-5">
             <VideoDisplay video={video!} />
           </div>
-          <div className="col-span-1">
+          <div className="col-span-1 w-full">
             <VideoActions video={video!} />
           </div>
         </div>

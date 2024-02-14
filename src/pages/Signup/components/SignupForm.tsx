@@ -69,7 +69,7 @@ const SignupForm = () => {
         validationSchema={signupSchema}
       >
         {({ errors, touched, values, isValid, dirty }) => (
-          <Form className="w-full grid grid-cols-2 gap-6 font-inter">
+          <Form className="w-full flex flex-col gap-3 font-inter lg:grid lg:grid-cols-2 lg:gap-6">
             <InputGroup
               name="name"
               value={values.name}
@@ -100,7 +100,7 @@ const SignupForm = () => {
               label="Confirm Password"
               type="password"
             />
-            <div className="mt-16 col-span-2">
+            <div className="mt-8 col-span-2 lg:mt-16">
               <Button
                 disabled={!isValid || !dirty}
                 pending={status === "pending"}
