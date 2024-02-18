@@ -58,7 +58,10 @@ const useRecord = () => {
     });
 
     const saveToFirestore = async (blob: Blob) => {
-      const fileName = `VID-${formatDate(new Date(), "yyyyMMddhhmm")}.webm`;
+      const fileName = `RECAST-${formatDate(
+        new Date(),
+        "yyyy-MM-dd-hhmm"
+      )}.webm`;
 
       try {
         const url = await uploadFile(blob, fileName);
@@ -77,20 +80,17 @@ const useRecord = () => {
         setUploadStatus("error");
       }
     };
-    await ysFixWebmDuration(blob, duration, saveToFirestore);
+    ysFixWebmDuration(blob, duration, saveToFirestore);
   };
 
   const createRecorder = (stream: MediaStream) => {
     const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
-    let startTime: number;
-    let stopTime: number;
+    let startTime = 0;
+    let stopTime = 0;
     let chunks: Blob[] = [];
 
     recorder.ondataavailable = (e: BlobEvent) => {
-      if (e.data.size > 0) {
-        console.log("chunk added");
-        chunks.push(e.data);
-      }
+      chunks.push(e.data);
     };
 
     recorder.onstop = () => {
